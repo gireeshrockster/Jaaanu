@@ -1,0 +1,51 @@
+NAME:G.V.AKASH NAIDU
+ROLL NO:2273A05181
+SECTION:MAC
+
+PROGRAM:Write c program for job sequence
+
+#include<stdbool.h>
+#include<stdlib.h>
+#include<stdio.h>
+typedef struct Jobs{
+	char id;
+	int dead;
+	int profit;
+}Jobs;
+int Compare(const void *a,const void *b){
+	Jobs *temp1=(Jobs *)a;
+	Jobs *temp2=(Jobs *)b;
+	return (temp2->profit-temp1->profit);
+}
+int min(int num1,int num2){
+	return (num1>num2)?num2:num1;
+}
+int main(){
+	Jobs arr[]={{'a',2,100},{'b',2,20},{'c',1,40},{'d',3,35},{'e',1,25}};
+	int n=sizeof(arr)/sizeof(arr[0]);
+	printf("following is maximum profit sequence of jobs:\n");
+	qsort(arr,n,sizeof(Jobs),Compare);
+	int result[n],i,j;
+	bool slot[n];
+	for(i=0;i<n;i++)
+	slot[i]=false;
+	for(i=0;i<n;i++){
+	for(j=min(n,arr[i].dead-1);j>=0;j--){
+		if(slot[j]==false){
+			result[j]=i;
+			slot[j]=i;
+			slot[j]=true;
+			break;
+		}
+		}
+	}
+	for(i=0;i<n;i++)
+	if(slot[i])
+	printf("%c\t",arr[result[i]].id);
+	return 0;
+}
+
+OUTPUT:
+
+following is maximum profit sequence of jobs:
+c	a	d	

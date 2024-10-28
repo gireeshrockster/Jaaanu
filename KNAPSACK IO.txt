@@ -1,0 +1,31 @@
+NAME:G.V.AKASH NAIDU
+ROLL NO:2273A05181
+SECTION:MAC
+
+PROGRAM:Write c program for for knapsack I/O.
+
+#include<stdio.h>
+int max(int a,int b){
+   return(a>b)?a:b;
+  }
+ int knapsack(int w,int wt[],int val[],int n){
+ 	if(n==0||w==0)
+ 	return 0;
+ 	if(wt[n-1]>w)
+	 return knapsack(w,wt,val,n-1);
+	 else
+	 return max(val[n-1]+knapsack(w-wt[n-1],wt,val,n-1),
+	              knapsack(w,wt,val,n-1));
+    }
+    int main()
+    {
+    	int profit[]={20,30,66,40,60};
+    	int weight[]={10,20,30,40,50};
+    	int w=100,n=5;
+    	printf("%d",knapsack(w,weight,profit,n));
+        return 0;
+	}
+
+   OUTPUT:
+
+    156

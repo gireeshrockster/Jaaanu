@@ -1,0 +1,66 @@
+NAME:G.V.AKASH NAIDU
+ROLL NO:2273A05181
+SECTION:MAC
+
+PROGRAM:Write c program for Greedy method(knapsack)
+
+#include<stdio.h>
+int main(){
+	float weight[50],profit[50],ratio[50],totalvalue,temp,capacity,amount;
+	int n,i,j;
+	printf("enter no.of items:");
+	scanf("%d",&n);
+	for(i=0;i<n;i++){
+		printf("enter weight and profit for item[%d]:\n",i);
+		scanf("%f%f",&weight[i],&profit[i]);
+	}
+	printf("enter capacity of knapsack:\n");
+	scanf("%f",&capacity);
+	for(i=0;i<n;i++)
+	ratio[i]=profit[i]/weight[i];
+	for(i=0;i<n;i++)
+	 for(j=i+1;j<n;j++)
+	 	if(ratio[i]<ratio[j]){
+	 		temp=ratio[i];
+	 		ratio[i]=ratio[j];
+	 		ratio[j]=temp;
+	 		temp=profit[i];
+	 		profit[i]=profit[j];
+	 		profit[j]=temp;
+	 		temp=weight[i];
+	 		weight[i]=weight[j];
+	 		weight[j]=temp;
+		 }
+		 printf("knapsack problems using greedy method:\n");
+		 for(i=0;i<n;i++){
+		 	if(weight[i]>capacity)
+		 		break;
+		 		else{
+		 			totalvalue=totalvalue+profit[i];
+		 			capacity=capacity-weight[i];
+				 }
+		 }
+		 if(i<n)
+		 	totalvalue=totalvalue+(ratio[i]*capacity);
+		 	printf("\n maximum value is %f\n",totalvalue);
+		 	return 0;
+}
+
+
+OUTPUT:
+
+enter no.of items:3
+enter weight and profit for item[0]:
+1
+4
+enter weight and profit for item[1]:
+5
+8
+enter weight and profit for item[2]:
+3
+4
+enter capacity of knapsack:
+15
+knapsack problems using greedy method:
+
+ maximum value is 16.000000

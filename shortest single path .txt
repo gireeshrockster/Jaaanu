@@ -1,0 +1,114 @@
+NAME:G.V.AKASH NAIDU
+ROLL NO:2273A05181
+SECTION:MAC
+
+PROGRAM:Write c program for shortest single path problem.
+#include <stdio.h>
+#include <limits.h>
+
+#define MAX 100 // Maximum number of vertices in the graph
+
+// Function to find the vertex with the minimum distance value
+int minDistance(int dist[], int sptSet[], int n) {
+    int min = INT_MAX, min_index;
+
+    for (int v = 0; v < n; v++)
+        if (sptSet[v] == 0 && dist[v] <= min) {
+            min = dist[v];
+            min_index = v;
+        }
+
+    return min_index;
+}
+
+// Function to print the constructed distance array
+void printSolution(int dist[], int n) {
+    printf("Vertex \t\t Distance from Source\n");
+    for (int i = 0; i < n; i++)
+        printf("%d \t\t %d\n", i, dist[i]);
+}
+
+// Function that implements Dijkstra's single source shortest path algorithm
+void dijkstra(int graph[MAX][MAX], int src, int n) {
+    int dist[MAX];  // dist[i] will hold the shortest distance from src to i
+    int sptSet[MAX]; // sptSet[i] will be true if vertex i is included in shortest path tree
+
+    // Initialize all distances as INFINITE and sptSet[] as false
+    for (int i = 0; i < n; i++) {
+        dist[i] = INT_MAX;
+        sptSet[i] = 0;
+    }
+
+    // Distance of source vertex from itself is always 0
+    dist[src] = 0;
+
+    // Find shortest path for all vertices
+    for (int count = 0; count < n - 1; count++) {
+        // Pick the minimum distance vertex from the set of vertices not yet processed
+        int u = minDistance(dist, sptSet, n);
+
+        // Mark the picked vertex as processed
+        sptSet[u] = 1;
+
+        // Update dist value of the adjacent vertices of the picked vertex
+        for (int v = 0; v < n; v++) {
+            // Update dist[v] only if it's not in sptSet, there's an edge from u to v, 
+            // and the total weight of path from src to v through u is smaller than the current value of dist[v]
+            if (!sptSet[v] && graph[u][v] && dist[u] != INT_MAX 
+                && dist[u] + graph[u][v] < dist[v])
+                dist[v] = dist[u] + graph[u][v];
+        }
+    }
+
+    // Print the shortest distance array
+    printSolution(dist, n);
+}
+
+int main() {
+    int n, src;
+    int graph[MAX][MAX];
+
+    // Input number of vertices
+    printf("Enter the number of vertices: ");
+    scanf("%d", &n);
+
+    // Input graph
+    printf("Enter the adjacency matrix (enter 0 if no edge exists between nodes):\n");
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
+            scanf("%d", &graph[i][j]);
+
+    // Input source vertex
+    printf("Enter the source vertex: ");
+    scanf("%d", &src);
+
+    // Call Dijkstra's algorithm
+    dijkstra(graph, src, n);
+
+    return 0;
+}
+
+OUTPUT:
+
+Enter the number of vertices: 9
+Enter the adjacency matrix (enter 0 if no edge exists between nodes):
+0 6 0 0 0 0 0 8 0
+6 0 8 0 0 0 1 3 0
+0 8 0 7 0 6 0 0 2
+0 0 7 0 9 1 4 0 0
+0 0 0 9 0 1 0 0 0
+0 0 0 1 2 0 4 0 0
+0 0 0 0 2 1 0 7 1
+8 0 1 0 0 0 0 3 0
+0 0 8 0 6 4 0 0 0
+Enter the source vertex: 0
+Vertex           Distance from Source
+0                0
+1                6
+2                9
+3                9
+4                9
+5                8
+6                7
+7                8
+8                8

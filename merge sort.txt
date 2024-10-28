@@ -1,0 +1,71 @@
+NAME:G.V.AKASH NAIDU
+ROLL NO:2273A05181
+SECTION:MAC
+
+PROGRAM:Write a c program for Merge sort
+#include<stdio.h>
+#include<stdlib.h>
+ void merge(int a[],int l,int m,int h){
+	int i,j,k;
+ 	int n1=m-l+1;
+ 	int n2=h-m;
+ 	int L[n1],R[n2];
+ 	for(i=0;i<n1;i++)
+ 		L[i]=a[l+i];
+ 		for(j=0;j<n2;j++)
+ 			R[j]=a[m+1+j];
+ 			i=0;
+ 			j=0;
+ 			k=l;
+ 			while(i<n1&&j<n2){
+ 				if(L[i]<=R[j]){
+ 					a[k]=L[i];
+ 					i++;
+				 }
+				 else{
+				 	a[k]=R[j];
+				 	j++;
+				 }
+				 	k++;
+				 }
+				 while(i<n1){
+				 	a[k]=L[i];
+				 	i++;
+				 	k++;
+				 }
+				 while(j<n2){
+				 	a[k]=R[j];
+				 	j++;
+				 	k++;
+				 }
+			 }
+			 void mergeSort(int a[],int l,int h){
+			 	if(l<h){
+			 		int m=l+(h-l)/2;
+			 		mergeSort(a,l,m);
+			 		mergeSort(a,m+1,h);
+			 		merge(a,l,m,h);
+				 }
+			 }
+			 void printArray(int A[],int size){
+			 	int i;
+			 	for(i=0;i<size;i++)
+			 	printf("%d\t",A[i]);
+			 	printf("\n");
+				 }
+				 int main(){
+					int a[]={10,8,20,5,7,9};
+					int a_size=sizeof(a)/sizeof(a[0]);
+					printf("given array:\n");
+					printArray(a,a_size);
+					mergeSort(a,0,a_size-1);
+					printf("sorted array\n");
+					printArray(a,a_size);
+					return 0;
+				}
+OUTPUT:
+
+given array:
+10	8	20	5	7	9	
+sorted array
+5	7	8	9	10	20	
